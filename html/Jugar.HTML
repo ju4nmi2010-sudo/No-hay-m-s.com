@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>El juego es de todos</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: rgb(240, 235, 245);
+    text-align: center;
+}
+
+/* TITULO */
+
+h1 {
+    color: rgb(80, 40, 120);
+}
+
+/* INFORMACION */
+
+#informacion {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(80, 40, 120);
+    margin: 10px;
+}
+
+/* CONTENEDOR */
+
+#contenedorJuego {
+    width: 900px;
+    height: 500px;
+    margin: 20px auto;
+    border: 6px solid rgb(80, 40, 120);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    background-color: rgb(130, 210, 255);
+}
+
+/* NIVEL */
+
+#nivel {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 50;
+    background-color: rgb(80, 40, 120);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* MUNDO */
+
+#mundo {
+    width: 6000px;
+    height: 500px;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    background:
+        linear-gradient(
+            rgb(130, 210, 255) 70%,
+            rgb(90, 180, 80) 70%
+        );
+}
+
+/* SUELO */
+
+#suelo {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 6000px;
+    height: 80px;
+    background-color: rgb(70, 150, 70);
+}
+
+/* JUGADOR */
+
+#jugador {
+    position: absolute;
+    width: 70px;
+    height: 100px;
+    object-fit: contain;
+    bottom: 80px;
+    left: 150px;
+    z-index: 10;
+}
+
+/* NIÑO BLANCO */
+
+#ninoBlanco {
+    position: absolute;
+    width: 70px;
+    height: 100px;
+    object-fit: contain;
+    left: 750px;
+    bottom: 80px;
+    z-index: 10;
+}
+
+/* PROFESOR */
+
+#profesor {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    object-fit: contain;
+    left: 1500px;
+    bottom: 80px;
+    z-index: 10;
+}
+
+/* RECTOR */
+
+#rector {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    object-fit: contain;
+    left: 5200px;
+    bottom: 80px;
+    z-index: 10;
+}
+
+/* OBSTACULOS */
+
+.obstaculo {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    bottom: 80px;
+    background-color: rgb(220, 70, 70);
+    border-radius: 8px;
+}
+
+/* HUECOS */
+
+.hueco {
+    position: absolute;
+    bottom: 0;
+    height: 80px;
+    background-color: rgb(35, 35, 35);
+    z-index: 2;
+}
+
+/* PLATAFORMAS */
+
+.plataforma {
+    position: absolute;
+    height: 25px;
+    background-color: rgb(80, 40, 120);
+    border-radius: 8px;
+}
+
+/* LAPICES Y BORRADORES */
+
+.objeto {
+    position: absolute;
+    bottom: 120px;
+    font-size: 35px;
+    z-index: 20;
+}
+
+/* COLEGIO */
+
+#colegio {
+    position: absolute;
+    left: 5000px;
+    bottom: 80px;
+    width: 600px;
+    height: 330px;
+    background-color: rgb(245, 200, 100);
+    border: 8px solid rgb(80, 40, 120);
+}
+
+#colegio h2 {
+    font-size: 40px;
+    color: rgb(80, 40, 120);
+}
+
+/* DIALOGO */
+
+#dialogo {
+    position: absolute;
+    z-index: 100;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    padding: 18px;
+    background-color: white;
+    border: 4px solid rgb(80, 40, 120);
+    border-radius: 15px;
+    font-size: 19px;
+    display: none;
+}
+
+/* TRANSICION */
+
+#transicion {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(34, 12, 82);
+    color: white;
+    text-align: center;
+    z-index: 1000;
+    padding-top: 180px;
+}
+
+#transicion h2 {
+    font-size: 55px;
+}
+
+#transicion p {
+    font-size: 25px;
+}
+
+#transicion button,
+#final button {
+    background-color: rgb(180, 100, 220);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#transicion button:hover,
+#final button:hover {
+    background-color: black;
+}
+
+/* FINAL */
+
+#final {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(34, 12, 82);
+    color: white;
+    text-align: center;
+    z-index: 1100;
+    padding-top: 150px;
+}
+
+#final h2 {
+    font-size: 55px;
+}
+
+#final p {
+    font-size: 25px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🎮 El juego es de todos</h1>
+
+<div id="informacion">
+
+    ⭐ Puntos:
+    <span id="puntos">0</span>
+
+    &nbsp;&nbsp;
+
+    ✏️ Objetos:
+    <span id="objetos">0</span>
+
+</div>
+
+
+<!-- JUEGO -->
+
+<div id="contenedorJuego">
+
+    <div id="nivel">
+        NIVEL 1
+    </div>
+
+
+    <div id="mundo">
+
+        <!-- SUELO -->
+
+        <div id="suelo"></div>
+
+
+        <!-- PERSONAJES -->
+
+        <img id="jugador"
+             src="../html/imagenes/niñoMoreno.png">
+
+        <img id="ninoBlanco"
+             src="../html/imagenes/niñoblanco.png">
+
+        <img id="profesor"
+             src="../html/imagenes/profesor.png">
+
+        <img id="rector"
+             src="../html/imagenes/rector.png">
+
+
+        <!-- ====================== -->
+        <!-- OBSTACULOS NIVEL 1 -->
+        <!-- ====================== -->
+
+        <div class="obstaculo"
+             style="left:400px;">
+        </div>
+
+        <div class="obstaculo"
+             style="left:900px;">
+        </div>
+
+        <div class="obstaculo"
+             style="left:1250px;">
+        </div>
+
+
+        <!-- HUECOS NIVEL 1 -->
+
+        <div class="hueco"
+             style="left:600px; width:130px;">
+        </div>
+
+        <div class="hueco"
+             style="left:1050px; width:150px;">
+        </div>
+
+
+        <!-- PLATAFORMAS NIVEL 1 -->
+
+        <div class="plataforma"
+             style="
+             left:700px;
+             bottom:180px;
+             width:180px;">
+        </div>
+
+        <div class="plataforma"
+             style="
+             left:1400px;
+             bottom:200px;
+             width:200px;">
+        </div>
+
+
+        <!-- LAPICES NIVEL 1 -->
+
+        <div class="objeto"
+             style="left:500px;">
+            ✏️
+        </div>
+
+        <div class="objeto"
+             style="left:1000px;">
+            ✏️
+        </div>
+
+        <div class="objeto"
+             style="left:1450px;">
+            🧽
+        </div>
+
+
+        <!-- ====================== -->
+        <!-- OBSTACULOS NIVEL 2 -->
+        <!-- ====================== -->
+
+        <div class="obstaculo"
+             style="left:2200px;">
+        </div>
+
+        <div class="obstaculo"
+             style="left:2500px;">
+        </div>
+
+        <div class="obstaculo"
+             style="left:2900px;">
+        </div>
+
+        <div class="obstaculo"
+             style="left:3200px;">
+        </div>
+
+
+        <!-- HUECOS NIVEL 2 -->
+
+        <div class="hueco"
+             style="left:2350px; width:150px;">
+        </div>
+
+        <div class="hueco"
+             style="left:2750px; width:130px;">
+        </div>
+
+        <div class="hueco"
+             style="left:3350px; width:180px;">
+        </div>
+
+
+        <!-- PLATAFORMAS NIVEL 2 -->
+
+        <div class="plataforma"
+             style="
+             left:2400px;
+             bottom:190px;
+             width:180px;">
+        </div>
+
+        <div class="plataforma"
+             style="
+             left:2800px;
+             bottom:230px;
+             width:180px;">
+        </div>
+
+        <div class="plataforma"
+             style="
+             left:3400px;
+             bottom:200px;
+             width:200px;">
+        </div>
+
+
+        <!-- OBJETOS NIVEL 2 -->
+
+        <div class="objeto"
+             style="left:2250px;">
+            🧽
+        </div>
+
+        <div class="objeto"
+             style="left:2600px;">
+            ✏️
+        </div>
+
+        <div class="objeto"
+             style="left:3000px;">
+            🧽
+        </div>
+
+        <div class="objeto"
+             style="left:3450px;">
+            ✏️
+        </div>
+
+
+        <!-- ====================== -->
+        <!-- NIVEL 3 -->
+        <!-- ====================== -->
+
+        <div class="obstaculo"
+             style="left:3900px;">
+        </div>
+
+        <div class="obstaculo"
+             style="left:4200px;">
+        </div>
+
+        <div class="obstaculo"
+             style="left:4600px;">
+        </div>
+
+
+        <!-- HUECOS NIVEL 3 -->
+
+        <div class="hueco"
+             style="left:4050px; width:130px;">
+        </div>
+
+        <div class="hueco"
+             style="left:4400px; width:160px;">
+        </div>
+
+        <div class="hueco"
+             style="left:4750px; width:150px;">
+        </div>
+
+
+        <!-- PLATAFORMAS NIVEL 3 -->
+
+        <div class="plataforma"
+             style="
+             left:4100px;
+             bottom:200px;
+             width:180px;">
+        </div>
+
+        <div class="plataforma"
+             style="
+             left:4450px;
+             bottom:230px;
+             width:200px;">
+        </div>
+
+
+        <!-- OBJETOS NIVEL 3 -->
+
+        <div class="objeto"
+             style="left:4000px;">
+            ✏️
+        </div>
+
+        <div class="objeto"
+             style="left:4300px;">
+            🧽
+        </div>
+
+        <div class="objeto"
+             style="left:4650px;">
+            ✏️
+        </div>
+
+
+        <!-- COLEGIO -->
+
+        <div id="colegio">
+
+            <h2>🏫 COLEGIO</h2>
+
+            <p>
+                ¡Bienvenido!
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- DIALOGO -->
+
+    <div id="dialogo"></div>
+
+</div>
+
+
+<p>
+    ⬅️ Mover atrás
+    &nbsp;&nbsp;
+    ➡️ Mover adelante
+    &nbsp;&nbsp;
+    ⬆️ Saltar
+</p>
+
+
+<!-- TRANSICION -->
+
+<div id="transicion">
+
+    <h2 id="tituloTransicion">
+        ¡NIVEL COMPLETADO!
+    </h2>
+
+    <p id="mensajeTransicion">
+        Prepárate para el siguiente nivel.
+    </p>
+
+    <button onclick="siguienteNivel()">
+        SIGUIENTE NIVEL
+    </button>
+
+</div>
+
+
+<!-- FINAL -->
+
+<div id="final">
+
+    <h2>🏆 ¡FELICITACIONES! 🏆</h2>
+
+    <p>
+        Has completado los 3 niveles.
+    </p>
+
+    <p>
+        ✏️ Has recogido lápices y borradores.
+    </p>
+
+    <p>
+        🤝 Recuerda: todos podemos ayudar a prevenir el bullying.
+    </p>
+
+    <button onclick="reiniciarJuego()">
+        🔄 REINICIAR JUEGO
+    </button>
+
+</div>
+
+
+<script>
+
+/* =========================
+   VARIABLES
+========================= */
+
+var jugador =
+    document.getElementById("jugador");
+
+var mundo =
+    document.getElementById("mundo");
+
+var dialogo =
+    document.getElementById("dialogo");
+
+var nivel =
+    document.getElementById("nivel");
+
+var posicionX = 150;
+
+var posicionY = 80;
+
+var velocidad = 5;
+
+var velocidadY = 0;
+
+var enSuelo = true;
+
+var jugando = true;
+
+var nivelActual = 1;
+
+var puntos = 0;
+
+var cantidadObjetos = 0;
+
+var izquierda = false;
+
+var derecha = false;
+
+
+/* =========================
+   CONTROLES
+========================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if (!jugando) {
+        return;
+    }
+
+    if (event.key === "ArrowRight") {
+
+        derecha = true;
+
+    }
+
+    if (event.key === "ArrowLeft") {
+
+        izquierda = true;
+
+    }
+
+    if (
+        event.key === "ArrowUp" &&
+        enSuelo
+    ) {
+
+        velocidadY = 13;
+
+        enSuelo = false;
+
+    }
+
+});
+
+
+document.addEventListener("keyup", function(event) {
+
+    if (event.key === "ArrowRight") {
+
+        derecha = false;
+
+    }
+
+    if (event.key === "ArrowLeft") {
+
+        izquierda = false;
+
+    }
+
+});
+
+
+/* =========================
+   DIALOGO
+========================= */
+
+function mostrarDialogo(texto) {
+
+    dialogo.innerHTML = texto;
+
+    dialogo.style.display = "block";
+
+}
+
+
+function ocultarDialogo() {
+
+    dialogo.style.display = "none";
+
+}
+
+
+/* =========================
+   OBJETOS
+========================= */
+
+function recogerObjetos() {
+
+    var objetos =
+        document.querySelectorAll(".objeto");
+
+    objetos.forEach(function(objeto) {
+
+        if (objeto.style.display === "none") {
+            return;
+        }
+
+        var xObjeto =
+            parseInt(objeto.style.left);
+
+        if (
+            posicionX > xObjeto - 60 &&
+            posicionX < xObjeto + 60
+        ) {
+
+            objeto.style.display = "none";
+
+            cantidadObjetos++;
+
+            puntos += 10;
+
+            document.getElementById("puntos")
+                .innerText = puntos;
+
+            document.getElementById("objetos")
+                .innerText = cantidadObjetos;
+
+        }
+
+    });
+
+}
+
+
+/* =========================
+   DETECTAR HUECOS
+========================= */
+
+function revisarHuecos() {
+
+    var huecos =
+        document.querySelectorAll(".hueco");
+
+    huecos.forEach(function(hueco) {
+
+        var xHueco =
+            parseInt(hueco.style.left);
+
+        var ancho =
+            parseInt(hueco.style.width);
+
+        if (
+            posicionX + 40 > xHueco &&
+            posicionX < xHueco + ancho &&
+            posicionY <= 60
+        ) {
+
+            reiniciarNivel();
+
+        }
+
+    });
+
+}
+
+
+/* =========================
+   REINICIAR NIVEL
+========================= */
+
+function reiniciarNivel() {
+
+    jugando = false;
+
+    alert(
+        "💥 ¡Caíste en un hueco! " +
+        "El nivel se reiniciará."
+    );
+
+    if (nivelActual === 1) {
+
+        posicionX = 150;
+
+    }
+
+    else if (nivelActual === 2) {
+
+        posicionX = 2100;
+
+    }
+
+    else {
+
+        posicionX = 3800;
+
+    }
+
+    posicionY = 80;
+
+    velocidadY = 0;
+
+    enSuelo = true;
+
+    jugador.style.left =
+        posicionX + "px";
+
+    jugador.style.bottom =
+        posicionY + "px";
+
+    jugando = true;
+
+}
+
+
+/* =========================
+   TRANSICION
+========================= */
+
+function mostrarTransicion() {
+
+    jugando = false;
+
+    izquierda = false;
+
+    derecha = false;
+
+    document.getElementById("transicion")
+        .style.display = "block";
+
+
+    document.getElementById("tituloTransicion")
+        .innerText =
+        "🎉 ¡NIVEL " +
+        nivelActual +
+        " COMPLETADO!";
+
+
+    if (nivelActual === 1) {
+
+        document.getElementById(
+            "mensajeTransicion"
+        ).innerText =
+            "¡Muy bien! Ahora comienza el Nivel 2.";
+
+    }
+
+    else if (nivelActual === 2) {
+
+        document.getElementById(
+            "mensajeTransicion"
+        ).innerText =
+            "¡Excelente! Ahora comienza el Nivel 3.";
+
+    }
+
+}
+
+
+/* =========================
+   SIGUIENTE NIVEL
+========================= */
+
+function siguienteNivel() {
+
+    nivelActual++;
+
+    document.getElementById("transicion")
+        .style.display = "none";
+
+
+    nivel.innerText =
+        "NIVEL " + nivelActual;
+
+
+    if (nivelActual === 2) {
+
+        posicionX = 2100;
+
+    }
+
+    else if (nivelActual === 3) {
+
+        posicionX = 3800;
+
+    }
+
+
+    posicionY = 80;
+
+    velocidadY = 0;
+
+    enSuelo = true;
+
+    jugador.style.left =
+        posicionX + "px";
+
+    jugador.style.bottom =
+        posicionY + "px";
+
+    jugando = true;
+
+}
+
+
+/* =========================
+   FINAL
+========================= */
+
+function terminarJuego() {
+
+    jugando = false;
+
+    izquierda = false;
+
+    derecha = false;
+
+    document.getElementById("final")
+        .style.display = "block";
+
+}
+
+
+/* =========================
+   REINICIAR TODO
+========================= */
+
+function reiniciarJuego() {
+
+    location.reload();
+
+}
+
+
+/* =========================
+   MOVIMIENTO
+========================= */
+
+function jugar() {
+
+    if (jugando) {
+
+
+        /* MOVIMIENTO */
+
+        if (derecha) {
+
+            posicionX += velocidad;
+
+        }
+
+
+        if (izquierda) {
+
+            posicionX -= velocidad;
+
+        }
+
+
+        /* GRAVEDAD */
+
+        velocidadY -= 0.6;
+
+        posicionY += velocidadY;
+
+
+        if (posicionY <= 80) {
+
+            posicionY = 80;
+
+            velocidadY = 0;
+
+            enSuelo = true;
+
+        }
+
+
+        /* LIMITES */
+
+        if (posicionX < 0) {
+
+            posicionX = 0;
+
+        }
+
+
+        if (posicionX > 5600) {
+
+            posicionX = 5600;
+
+        }
+
+
+        /* ACTUALIZAR JUGADOR */
+
+        jugador.style.left =
+            posicionX + "px";
+
+        jugador.style.bottom =
+            posicionY + "px";
+
+
+        /* CAMARA */
+
+        var camara =
+            posicionX - 300;
+
+
+        if (camara < 0) {
+
+            camara = 0;
+
+        }
+
+
+        if (camara > 5100) {
+
+            camara = 5100;
+
+        }
+
+
+        mundo.style.left =
+            -camara + "px";
+
+
+        /* RECOGER OBJETOS */
+
+        recogerObjetos();
+
+
+        /* REVISAR HUECOS */
+
+        revisarHuecos();
+
+
+        /* =========================
+           NIVEL 1
+        ========================= */
+
+        if (
+            nivelActual === 1 &&
+            posicionX >= 1700
+        ) {
+
+            mostrarDialogo(
+                "👨‍🏫 Profesor: " +
+                "Hiciste bien en pedir ayuda."
+            );
+
+
+            setTimeout(function() {
+
+                ocultarDialogo();
+
+                puntos += 100;
+
+                document.getElementById("puntos")
+                    .innerText = puntos;
+
+                mostrarTransicion();
+
+            }, 2500);
+
+        }
+
+
+        /* =========================
+           NIVEL 2
+        ========================= */
+
+        if (
+            nivelActual === 2 &&
+            posicionX >= 3600
+        ) {
+
+            mostrarDialogo(
+                "🤝 Has aprendido que " +
+                "ayudar a los demás " +
+                "es importante."
+            );
+
+
+            setTimeout(function() {
+
+                ocultarDialogo();
+
+                puntos += 100;
+
+                document.getElementById("puntos")
+                    .innerText = puntos;
+
+                mostrarTransicion();
+
+            }, 2500);
+
+        }
+
+
+        /* =========================
+           NIVEL 3
+        ========================= */
+
+        if (
+            nivelActual === 3 &&
+            posicionX >= 4950
+        ) {
+
+            terminarJuego();
+
+        }
+
+    }
+
+
+    requestAnimationFrame(jugar);
+
+}
+
+
+/* INICIAR */
+
+jugar();
+
+</script>
+
+</body>
+
+</html>
